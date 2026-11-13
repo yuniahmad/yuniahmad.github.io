@@ -11,7 +11,7 @@
 <meta property="og:image" content="profile.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Kaushan+Script&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Kaushan+Script&family=Caveat:wght@500&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
 <style>
   /* ---------- Palette: neon gradient poster ---------- */
   :root, [data-theme="dark"] {
@@ -168,17 +168,18 @@
   .collab .card:nth-child(5) { border-left-color: var(--lime); }
 
   /* Ideation lab — blue/cyan triangle poster */
-  .lab { color: #fff; border-radius: 22px; padding: 22px 18px; position: relative; overflow: hidden; isolation: isolate; border: 0; box-shadow: 0 16px 40px rgba(61,75,255,.3);
+  .lab { color: #fff; border-radius: 22px; padding: 28px 18px 22px; margin-top: 12px; position: relative; overflow: hidden; border: 0; box-shadow: 0 16px 40px rgba(61,75,255,.3);
     background:
       linear-gradient(135deg, rgba(46,230,214,.0) 0 60%, rgba(46,230,214,.18) 60% 61%, transparent 61%),
       linear-gradient(150deg, #6A3BFF 0%, #3D4BFF 60%, #2A36D9 100%); }
-  .lab::before { content: ""; position: absolute; z-index: -1; right: -60px; bottom: -40px; width: 180px; height: 180px;
+  .lab::before { content: ""; position: absolute; z-index: 0; pointer-events: none; right: -60px; bottom: -40px; width: 180px; height: 180px;
     background: linear-gradient(135deg, var(--cyan), var(--blue));
     clip-path: polygon(0 0, 100% 50%, 0 100%); opacity: .35; }
-  .lab::after { content: ""; position: absolute; z-index: -1; right: 70px; bottom: 30px; width: 90px; height: 90px;
+  .lab::after { content: ""; position: absolute; z-index: 0; pointer-events: none; right: 70px; bottom: 30px; width: 90px; height: 90px;
     background: linear-gradient(135deg, var(--cyan), #1B1F8F);
     clip-path: polygon(0 0, 100% 50%, 0 100%); opacity: .25; }
-  .lab h3 { font-family: var(--serif); font-size: 24px; margin-bottom: 4px; }
+  .lab > * { position: relative; z-index: 1; }
+  .lab h3 { font-family: var(--serif); font-size: 26px; line-height: 1.25; margin: 0 0 6px; padding-top: 2px; }
   .lab p.sub { color: #E9E6FF; margin: 0 0 4px; font-size: 15px; }
   .vh { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
   .lab .btn { background: rgba(20,12,80,.35); color: #fff; border-color: rgba(255,255,255,.4); min-height: 48px; font-size: 14px; }
@@ -201,6 +202,14 @@
   .pc-frame canvas { touch-action: none; cursor: grab; }
   .pc-frame canvas:active { cursor: grabbing; }
   .opts.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .save-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .save-actions .btn-gold { grid-column: 1 / -1; }
+  .lab .btn-wa { background: #25D366; border-color: #25D366; color: #062E16; }
+  .lab .btn-wa svg { color: #062E16; }
+  .save-sheet { position: fixed; inset: 0; z-index: 60; background: rgba(7,6,15,.88); display: grid; place-items: center; padding: 16px; }
+  .save-card { width: min(440px, 100%); max-height: 100%; overflow: auto; background: #fff; color: #0B0A16; border-radius: 18px; padding: 14px; display: grid; gap: 12px; }
+  .save-card p { margin: 0; font-size: 15px; }
+  .save-card img { width: 100%; height: auto; border-radius: 10px; -webkit-touch-callout: default; user-select: auto; }
   .own-cap { margin-top: 8px; }
   .own-cap label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
   .own-cap input { width: 100%; min-height: 48px; padding: 10px 12px; border-radius: 12px; border: 2px solid var(--lime); background: #fff; color: #0B0A16; font: 500 16px var(--sans); }
@@ -375,12 +384,12 @@
     <p class="kicker">Got 30 seconds? Try this</p>
     <div class="lab">
       <h3 id="lab-title">The Creative Ideation Lab</h3>
-      <p class="sub">A quick creative souvenir from ADADA 2026.</p>
+      <p class="sub">A quick creative souvenir from me!</p>
 
       <!-- ===== Activity 1: Sketch Me in Bandung ===== -->
       <div class="activity" id="sketchMe" role="group" aria-labelledby="sm-title">
         <h4 id="sm-title">Sketch Me in Bandung</h4>
-        <p class="act-intro">Turn your selfie into a pen or pencil sketch and take home a postcard from Bandung.</p>
+        <p class="act-intro">Turn your selfie into a pencil sketch or a vibrant watercolour painting, and take home a postcard from Bandung.</p>
 
         <div class="sm-start">
           <button class="btn btn-gold" type="button" id="smCam">
@@ -409,24 +418,25 @@
 
         <div id="smStudio" hidden>
           <div class="opt-row">
-            <span class="opt-label" id="lblMode">Sketch style</span>
+            <span class="opt-label" id="lblMode">Style</span>
             <div class="opts two" role="radiogroup" aria-labelledby="lblMode" data-key="mode">
               <button type="button" role="radio" aria-checked="true" data-val="pencil">Pencil sketch</button>
-              <button type="button" role="radio" aria-checked="false" data-val="pen">Pen sketch</button>
+              <button type="button" role="radio" aria-checked="false" data-val="watercolour">Watercolour</button>
             </div>
           </div>
 
           <div class="opt-row">
             <span class="opt-label" id="lblCap">Pick a caption</span>
             <div class="opts two" role="radiogroup" aria-labelledby="lblCap" data-key="caption">
-              <button type="button" role="radio" aria-checked="true" data-val="Senyum, Bandung!">Senyum, Bandung!</button>
-              <button type="button" role="radio" aria-checked="false" data-val="ADADA in Ink">ADADA in Ink</button>
-              <button type="button" role="radio" aria-checked="false" data-val="Bandung looks good in ink.">Bandung looks good in ink.</button>
+              <button type="button" role="radio" aria-checked="true" data-val="Jom Collab!">Jom Collab!</button>
+              <button type="button" role="radio" aria-checked="false" data-val="Let’s Sketch a Plan!">Let’s Sketch a Plan!</button>
+              <button type="button" role="radio" aria-checked="false" data-val="Ada Idea? Jom!">Ada Idea? Jom!</button>
               <button type="button" role="radio" aria-checked="false" data-val="__own">Write my own</button>
             </div>
             <div class="own-cap" id="ownWrap" hidden>
               <label for="ownCap">Your caption</label>
               <input type="text" id="ownCap" maxlength="40" placeholder="Type up to 40 characters" autocomplete="off" enterkeyhint="done">
+              <p class="hint">It updates on the postcard as you type.</p>
             </div>
           </div>
 
@@ -438,15 +448,27 @@
             <button class="btn" type="button" id="cropReset">Reset crop</button>
           </details>
 
-          <div class="lab-actions">
+          <div class="save-actions">
             <button class="btn btn-gold" type="button" id="smDownload">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg>
-              Download postcard
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+              <span id="saveLabel">Save to Photos</span>
+            </button>
+            <button class="btn btn-wa" type="button" id="smShare">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.08.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.5a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.93.95-3.48-.22-.36a9.38 9.38 0 0 1-1.44-5.01c0-5.19 4.23-9.42 9.43-9.42 2.52 0 4.88.98 6.66 2.76a9.36 9.36 0 0 1 2.76 6.67c0 5.2-4.23 9.42-9.42 9.42zm8.02-17.44A11.27 11.27 0 0 0 12.05.75C5.8.75.72 5.83.72 12.08c0 2 .52 3.95 1.52 5.66L.62 23.25l5.65-1.48a11.3 11.3 0 0 0 5.78 1.47c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.01z"/></svg>
+              Share to WhatsApp
             </button>
             <button class="btn" type="button" id="smChange">Change photo</button>
           </div>
+          <p class="hint" id="saveHint"></p>
         </div>
         <p class="note">Your photo stays on your device. Nothing is uploaded or stored, and no account is needed.</p>
+        <div class="save-sheet" id="saveSheet" role="dialog" aria-modal="true" aria-labelledby="saveSheetTitle" hidden>
+          <div class="save-card">
+            <p id="saveSheetTitle"><strong>Press and hold the postcard</strong>, then tap <strong>Save to Photos</strong> (iPhone) or <strong>Download image</strong> (Android).</p>
+            <img id="saveImg" alt="Your finished postcard">
+            <button class="btn btn-gold" type="button" id="saveClose">Done</button>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -773,13 +795,17 @@ const EMBEDDED_PHOTO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/6xaJS
   const PC = {                       // layout in base units (1060 × 1484); exported at K× scale
     W: 1060, H: 1484, K: 1.5,
     win: { x: 150, y: 58, w: 780, h: 1000 },          // replaceable portrait area
-    caption: { cx: 530, base: 1150, maxW: 760, max: 112, min: 40 },
+    caption: { cx: 530, base: 1112, maxW: 760, max: 112, min: 40 },
     line1: "ADADA + CUMULUS 2026 · Bandung, Indonesia",
     line2: "29 Nov – 1 Dec 2026",
+    credit: { cx: 452, a: "A little souvenir from", name: "Yuni Ahmad", email: "noor_wahyuni@msu.edu.my" },
     coral: "#EF4B4B", indigo: "#2C2E8C",
     frameSrc: POSTCARD_FRAME, logoSrc: ADADA_LOGO, logo: { x: 38, y: 34, w: 250 }
   };
-  const ST = { mode: "pencil", caption: "Senyum, Bandung!", own: "", zoom: 1, fx: 0, fy: -0.25 };
+  let smBlob = null, blobTimer = null, blobVer = 0;       // pre-made PNG so Save/Share open instantly (keeps the tap "fresh" for iOS)
+  function queueBlob() { smBlob = null; clearTimeout(blobTimer); const v = ++blobVer;
+    blobTimer = setTimeout(() => { try { pc.toBlob((b) => { if (v === blobVer) smBlob = b; }, "image/png"); } catch (e) {} }, 400); }
+  const ST = { mode: "pencil", caption: "Jom Collab!", own: "", zoom: 1, fx: 0, fy: -0.25 };
   const pc = $("pcCanvas"), pg = pc.getContext("2d");
   let smSrc = null, smSketch = null, smSketchKey = "", smAssets = null, smBusy = false, smQueued = null, smTimer = null;
 
@@ -825,7 +851,7 @@ const EMBEDDED_PHOTO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/6xaJS
     const T = blur2(T0, w, h, Math.max(1, Math.round(1.5 * u)));
     const a1 = blur2(G, w, h, Math.max(1, Math.round(0.8 * u))), a2 = blur2(G, w, h, Math.max(2, Math.round(2.8 * u)));
     const E = new Float32Array(N); for (let p = 0; p < N; p++) E[p] = sstep(1.5, 9, a2[p] - a1[p]);
-    return { w, h, u, T, E };
+    return { w, h, u, T, E, px };
   }
   // irregular vignette so the sketch dissolves into the paper (bottom fades like the reference)
   function maskAt(x, y, w, h, n) {
@@ -880,30 +906,210 @@ const EMBEDDED_PHOTO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/6xaJS
     return out;
   }
 
-  /* ---- Pen: crisp black contours + sparse, high-contrast parallel hatching ---- */
-  function sketchPen(A, seed) {
-    const { w, h, u, T, E } = A, out = mk(w, h), g = out.getContext("2d"), R = rng(seed);
-    g.fillStyle = "#fff"; g.fillRect(0, 0, w, h);
-    const hatch = (th, ang, sp, lw) => {
-      const dx = Math.cos(ang), dy = Math.sin(ang), nx = -dy, ny = dx, D = Math.hypot(w, h), step = 2 * u, P = new Path2D();
-      for (let o = -D; o < D; o += sp * u) {
-        let on = false, sx = 0, sy = 0;
-        for (let s = -D; s < D; s += step) {
-          const x = w / 2 + nx * o + dx * s, y = h / 2 + ny * o + dy * s, inside = x >= 0 && y >= 0 && x < w && y < h;
-          const ok = inside && T[(y | 0) * w + (x | 0)] < th && maskAt(x, y, w, h, 0) > 0.5;
-          if (ok && !on) { on = true; sx = x; sy = y; }
-          else if (!ok && on) { on = false; if (Math.hypot(x - sx, y - sy) > 4 * u) { P.moveTo(sx, sy); P.lineTo(x, y); } }
-        }
-      }
-      g.strokeStyle = "rgba(12,12,16,.92)"; g.lineWidth = lw * u; g.lineCap = "round"; g.stroke(P);
-    };
-    hatch(0.42, Math.PI / 4, 8, 1.1); hatch(0.22, -Math.PI / 4, 8, 1.1); hatch(0.09, 0, 5, 1.2);
-    const id = g.getImageData(0, 0, w, h), d = id.data;
-    for (let y = 0, p = 0; y < h; y++) for (let x = 0; x < w; x++, p++) {
-      const m = maskAt(x, y, w, h, 0); if (m < 0.35) continue;
-      if (E[p] > 0.42 || (T[p] < 0.035 && m > 0.6)) { const i = p * 4; d[i] = d[i + 1] = d[i + 2] = 14; }
+  /* ---- Watercolour: vibrant washes from the photo's own colours, pigment pooling at the edges,
+          paper granulation, a light underdrawing and colourful splashes around the portrait ---- */
+  function hsl2rgb(h, s, l) {
+    const c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = l - c / 2;
+    const [r, g, b] = h < 60 ? [c, x, 0] : h < 120 ? [x, c, 0] : h < 180 ? [0, c, x] : h < 240 ? [0, x, c] : h < 300 ? [x, 0, c] : [c, 0, x];
+    return [(r + m) * 255, (g + m) * 255, (b + m) * 255];
+  }
+  function rgb2hsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
+    if (!d) return [0, 0, l];
+    const s = d / (1 - Math.abs(2 * l - 1)); let h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    return [(h * 60 + 360) % 360, Math.min(1, s), l];
+  }
+  function vividHSL(r, g, b) {
+    let [h, sat, l] = rgb2hsl(r, g, b);
+    if (l < 0.22 && sat < 0.45) return [246 + (l - 0.1) * 80, 0.6, 0.2 + l * 0.6];             // blacks become deep indigo
+    if (sat < 0.18) return [212, 0.22, 0.45 + l * 0.55];                                       // greys: pale, cool and light
+    const skin = h < 50 || h > 340;
+    return [h, Math.min(0.85, sat * (skin ? 1.15 : 1.4) + 0.06), 0.18 + l * 0.8];
+  }
+  function kmeansRGB(pts, k, iters) {
+    pts.sort((a, b) => (a[0] + a[1] + a[2]) - (b[0] + b[1] + b[2]));
+    let C = []; for (let j = 0; j < k; j++) C.push(pts[Math.floor((j + 0.5) / k * pts.length)].slice());
+    for (let it = 0; it < iters; it++) {
+      const S = C.map(() => [0, 0, 0, 0]);
+      for (const p of pts) { let b = 0, bd = 1e12;
+        for (let j = 0; j < k; j++) { const c = C[j], d = (p[0] - c[0]) ** 2 + (p[1] - c[1]) ** 2 + (p[2] - c[2]) ** 2; if (d < bd) { bd = d; b = j; } }
+        const q = S[b]; q[0] += p[0]; q[1] += p[1]; q[2] += p[2]; q[3]++; }
+      C = C.map((c, j) => S[j][3] ? [S[j][0] / S[j][3], S[j][1] / S[j][3], S[j][2] / S[j][3]] : c);
     }
+    return C;
+  }
+  function noiseField(w, h, cells, R) {
+    const c = mk(cells, Math.max(2, Math.round(cells * h / w))), g = c.getContext("2d"), id = g.createImageData(c.width, c.height);
+    for (let i = 0; i < id.data.length; i += 4) { const v = R() * 255; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255; }
     g.putImageData(id, 0, 0);
+    const big = mk(w, h), bg = ctx2d(big); bg.imageSmoothingEnabled = true; bg.drawImage(c, 0, 0, w, h);
+    const d = bg.getImageData(0, 0, w, h).data, o = new Float32Array(w * h); for (let p = 0; p < w * h; p++) o[p] = d[p * 4] / 255;
+    return o;
+  }
+  const mixHue = (h1, h2, k) => { let d = ((h2 - h1 + 540) % 360) - 180; return (h1 + d * k + 360) % 360; };
+  function organic(g, R, x, y, r, sx = 1, sy = 0.85) {        // irregular watercolour shape
+    const f1 = 2 + (R() * 3 | 0), f2 = 5 + (R() * 5 | 0), f3 = 11 + (R() * 6 | 0), p1 = R() * 6.28, p2 = R() * 6.28, p3 = R() * 6.28, P = new Path2D();
+    for (let t = 0; t <= 96; t++) {
+      const a = t / 96 * Math.PI * 2, rr = r * (1 + 0.25 * Math.sin(a * f1 + p1) + 0.12 * Math.sin(a * f2 + p2) + 0.05 * Math.sin(a * f3 + p3));
+      const px = x + Math.cos(a) * rr * sx, py = y + Math.sin(a) * rr * sy; t ? P.lineTo(px, py) : P.moveTo(px, py);
+    }
+    P.closePath(); return P;
+  }
+  function paintWatercolour(A, seed, zf = 1) {
+    const { w, h, u, T, E, px } = A, N = w * h, R = rng(seed);
+    const n1 = noiseField(w, h, 60, R), n2 = noiseField(w, h, 9, R), n3 = noiseField(w, h, 220, R), n4 = noiseField(w, h, 5, R);
+    const ch = [0, 1, 2].map((c) => { const a = new Float32Array(N); for (let p = 0; p < N; p++) a[p] = px[p * 4 + c]; return blur2(a, w, h, Math.max(2, Math.round(2.5 * u))); });
+    // vivid colour, values stepped into soft layered washes
+    const H = new Float32Array(N), Sa = new Float32Array(N), Lv = new Float32Array(N), step = new Uint8Array(N);
+    for (let p = 0; p < N; p++) {
+      const [hh, ss, ll] = vividHSL(ch[0][p], ch[1][p], ch[2][p]);
+      const q = Math.round(ll * 5) / 5; H[p] = hh; Sa[p] = ss; Lv[p] = ll * 0.45 + q * 0.55; step[p] = Math.round(ll * 5);
+    }
+    const Lb = blur2(Lv, w, h, Math.max(1, Math.round(1.5 * u)));
+    const B = new Float32Array(N);
+    for (let y = 0; y < h - 1; y++) for (let x = 0; x < w - 1; x++) { const p = y * w + x; if (step[p] !== step[p + 1] || step[p] !== step[p + w]) B[p] = 1; }
+    const pool = blur2(B, w, h, Math.max(1, Math.round(1.5 * u)));
+
+    const out = mk(w, h), g = out.getContext("2d");
+    g.fillStyle = "#fff"; g.fillRect(0, 0, w, h);
+    const PINK = "232,62,140", MAG = "214,40,120", BLUE = "62,132,206", SKY = "120,180,230", TEAL = "60,170,190", YEL = "246,196,70", VIO = "130,90,200";
+    const oy = h * (1 - zf) * 0.5, faceX = w / 2, faceY = oy + h * 0.38 * zf, frx = w * 0.25 * zf, fry = h * 0.26 * zf, cy0 = oy + h * 0.42 * zf;
+    const clear = (x, y, pad) => ((x - faceX) / (frx + pad)) ** 2 + ((y - faceY) / (fry + pad)) ** 2 > 1;
+
+    // 1) big bleeding background washes around the head (pink on one side, blue on the other)
+    const wl = mk(w, h), wg = wl.getContext("2d");
+    const side = R() < 0.5 ? 1 : -1;
+    const washes = [
+      [w / 2 + side * w * 0.3, h * 0.2, w * 0.3, [PINK, MAG, PINK]], [w / 2 - side * w * 0.32, h * 0.32, w * 0.3, [BLUE, SKY, TEAL]],
+      [w / 2 - side * w * 0.36, h * 0.66, w * 0.26, [SKY, BLUE, PINK]], [w / 2 + side * w * 0.34, h * 0.62, w * 0.26, [PINK, VIO, SKY]],
+      [w / 2, h * 0.08, w * 0.24, [PINK, SKY, YEL]]
+    ];
+    for (const W2 of washes) { W2[0] = Math.max(w * 0.2, Math.min(w * 0.8, W2[0])); }
+    for (const [x, y, r, cs] of washes) {
+      for (let k = 0; k < 4; k++) {
+        const col = cs[k % cs.length], P = organic(wg, R, x + (R() - 0.5) * r * 0.5, y + (R() - 0.5) * r * 0.5, r * (0.45 + R() * 0.45), 1, 0.8 + R() * 0.4);
+        wg.fillStyle = `rgba(${col},${0.14 + R() * 0.1})`; wg.fill(P);
+        wg.strokeStyle = `rgba(${col},${0.14 + R() * 0.1})`; wg.lineWidth = (0.8 + R() * 1.2) * u; wg.stroke(P);   // dried rims
+      }
+    }
+    wg.globalCompositeOperation = "destination-out";                       // keep the face clean and soften the outer edges
+    const fg = wg.createRadialGradient(faceX, faceY, Math.min(frx, fry) * 0.6, faceX, faceY + h * 0.03, Math.max(frx, fry) * 1.15);
+    fg.addColorStop(0, "rgba(0,0,0,1)"); fg.addColorStop(1, "rgba(0,0,0,0)"); wg.fillStyle = fg; wg.fillRect(0, 0, w, h);
+    const fade = 70 * u;
+    [[0, 0, fade, 0, 0, 0, fade, h], [w, 0, w - fade, 0, w - fade, 0, fade, h], [0, 0, 0, fade, 0, 0, w, fade], [0, h, 0, h - fade, 0, h - fade, w, fade]].forEach(([x1, y1, x2, y2, rx, ry, rw, rh]) => {
+      const lg2 = wg.createLinearGradient(x1, y1, x2, y2); lg2.addColorStop(0, "rgba(0,0,0,1)"); lg2.addColorStop(1, "rgba(0,0,0,0)"); wg.fillStyle = lg2; wg.fillRect(rx, ry, rw, rh); });
+    g.save(); g.globalCompositeOperation = "multiply"; g.drawImage(wl, 0, 0); g.restore();
+
+    // 2) the portrait: split-toned colour (violet/magenta shadows, warm highlights), pooled edges, granulation
+    const pl = mk(w, h), pg2 = pl.getContext("2d"), id = pg2.createImageData(w, h), o = id.data;
+    const faceK = (x, y) => Math.max(0, 1 - (((x - faceX) / (frx * 1.05)) ** 2 + ((y - faceY) / (fry * 1.05)) ** 2));
+    for (let y = 0, p0 = 0; y < h; y++) for (let x = 0; x < w; x++, p0++) {
+      const dsp = 26 * u * (1 - Math.min(1, faceK(x, y) * 2.5));                                  // shapes drift off the form (not on the face)
+      const sx = Math.min(w - 1, Math.max(0, x + (n2[p0] - 0.5) * dsp * 2 + (n1[p0] - 0.5) * dsp * 0.6 | 0));
+      const sy = Math.min(h - 1, Math.max(0, y + (n4[p0] - 0.5) * dsp * 2 + (n1[p0] - 0.5) * dsp * 0.6 | 0));
+      const p = sy * w + sx;
+      let hh = H[p], ss = Sa[p], l = Lb[p];
+      if (l < 0.55) { const k = (0.55 - l) / 0.55 * 0.65; hh = mixHue(hh, 265 + (n4[p] - 0.5) * 90, k); ss = ss * (1 - k) + 0.45 * k; }   // cool, colourful shadows
+      else if (l < 0.8) { const k = (l - 0.55) / 0.25 * 0.3; hh = mixHue(hh, 38, k); }                                            // warm, glowing light
+      hh = (hh + (n2[p] - 0.5) * (26 + 70 * Math.min(1, faceK(x, y) * 2)) + 360) % 360;               // colour drifts like wet paint, more on the face                                                                                   // colour drifts like wet paint
+      if (l > 0.78) l = 0.78 + (l - 0.78) * 2.4;
+      const rgb = hsl2rgb(hh, Math.min(1, ss), Math.min(1, l));
+      const rr = Math.hypot((x - w / 2) / (w * 0.46 * zf), (y - cy0) / (h * 0.55 * zf)) + (n2[p0] - 0.5) * 0.55 + (n1[p0] - 0.5) * 0.14;
+      const lightGap = l > 0.7 && n1[p0] > 0.55 ? 0.25 : 1;                                     // paper left untouched in the light
+      const m = Math.min(1 - sstep(0.6, 0.86, rr), maskAt(x, y, w, h, 0) * 1.2) * 0.85 * lightGap;
+      const edge = 1 - 0.3 * Math.min(1, pool[p] * 3), gran = 0.9 + 0.12 * n1[p0] + 0.07 * (n3[p0] - 0.5);
+      const line = E[p0] > 0.55 ? Math.min(1, (E[p0] - 0.55) / 0.35) : 0, i = p0 * 4;
+      for (let c = 0; c < 3; c++) {
+        let v = rgb[c] * edge * gran; v = v * (1 - 0.55 * line) + [36, 22, 80][c] * 0.55 * line;
+        o[i + c] = 255 - (255 - Math.max(0, Math.min(255, v))) * m;
+      }
+      o[i + 3] = 255;
+    }
+    pg2.putImageData(id, 0, 0);
+    g.save(); g.globalCompositeOperation = "multiply"; g.drawImage(pl, 0, 0); g.restore();
+
+    // 2b) loose, overlapping brush strokes: translucent glazes with hard dried edges, colours pushed off-hue
+    const inside = (x, y) => { const rr = Math.hypot((x - w / 2) / (w * 0.46 * zf), (y - cy0) / (h * 0.55 * zf)); return rr < 0.95 && maskAt(x, y, w, h, 0) > 0.3; };
+    const tone = (x, y) => { const p = Math.min(h - 1, Math.max(0, y | 0)) * w + Math.min(w - 1, Math.max(0, x | 0)); return [H[p], Sa[p], Lb[p], E[p]]; };
+    const dab = (x, y, len, wid, ang, col, a) => {
+      const P = new Path2D(), n = 7, ca = Math.cos(ang), sa = Math.sin(ang);
+      for (let k = 0; k < n * 2; k++) {
+        const t = k < n ? k / (n - 1) : 1 - (k - n) / (n - 1), side = k < n ? 1 : -1;
+        const along = (t - 0.5) * len, across = side * wid * (0.35 + 0.65 * Math.sin(Math.PI * Math.min(1, t * 1.15))) * (0.75 + R() * 0.5) / 2;
+        const px = x + along * ca - across * sa, py = y + along * sa + across * ca; k ? P.lineTo(px, py) : P.moveTo(px, py);
+      }
+      P.closePath();
+      g.fillStyle = `rgba(${col},${a})`; g.fill(P);
+      g.strokeStyle = `rgba(${col},${Math.min(0.2, a * 1.1)})`; g.lineWidth = (0.5 + R() * 0.7) * u; g.stroke(P);
+    };
+    g.save(); g.globalCompositeOperation = "multiply"; g.lineJoin = "round";
+    const passes = [[120, 200, 30, 72], [420, 90, 14, 34], [720, 40, 6, 16]];   // count, len, wid min/max
+    for (const [cnt, L, wMin, wMax] of passes) {
+      for (let n = 0, made = 0; n < cnt * 4 && made < cnt; n++) {
+        const x = R() * w, y = R() * h; if (!inside(x, y)) continue;
+        const [hh, ss, l, e] = tone(x, y);
+        const want = (1 - l) ** 1.4 * 0.85 + 0.1; if (R() > want) continue;                   // more strokes in shadows
+        if (faceK(x, y) > 0.25 && (L < 50 || R() < 0.62)) continue;                                // face stays readable but gets some strokes
+        if (L < 50 && l > 0.6) continue; made++;
+        let hue = (hh + (R() - 0.5) * 60 + 360) % 360, sat = Math.min(0.7, ss * 0.85 + 0.1);
+        if (R() < 0.18) hue = [325, 200, 265, 45, 185][(R() * 5) | 0];                          // surprise accent colours
+        const lit = Math.max(0.45, Math.min(0.85, l * 0.6 + 0.4));
+        const c = hsl2rgb(hue, sat, lit).map((v) => v | 0).join(",");
+        const ang = (R() < 0.6 ? -1.1 : 0.5) + (R() - 0.5) * 0.9;
+        dab(x, y, L * u * (0.6 + R() * 0.7), (wMin + R() * (wMax - wMin)) * u, ang, c, 0.1 + R() * 0.12);
+      }
+    }
+    // colourful glazes across the face: pink, blue, violet and yellow washes that let features show through
+    const faceCols = [[330, 0.6, 0.7], [205, 0.55, 0.7], [265, 0.5, 0.72], [48, 0.65, 0.7], [180, 0.5, 0.7], [350, 0.6, 0.7]];
+    for (let n = 0, made = 0; n < 600 && made < 60; n++) {
+      const x = faceX + (R() - 0.5) * frx * 2.2, y = faceY + (R() - 0.5) * fry * 2.2; if (faceK(x, y) <= 0.05) continue; made++;
+      const [fh, fs, fl] = faceCols[(R() * faceCols.length) | 0], c = hsl2rgb(fh + (R() - 0.5) * 20, fs, fl).map((v) => v | 0).join(",");
+      dab(x, y, (50 + R() * 110) * u, (16 + R() * 34) * u, (R() < 0.6 ? -1.1 : 0.5) + (R() - 0.5) * 0.9, c, 0.09 + R() * 0.08);
+    }
+    g.restore();
+
+    // 2c) loose pencil/ink drawing on top: overshooting, doubled contour strokes + a few construction lines
+    const grad = (x, y) => { const d = 2 * u, a = (xx, yy) => Lb[Math.min(h - 1, Math.max(0, yy | 0)) * w + Math.min(w - 1, Math.max(0, xx | 0))]; return [a(x + d, y) - a(x - d, y), a(x, y + d) - a(x, y - d)]; };
+    const Lp = new Path2D(), Dp = new Path2D();
+    for (let n = 0; n < 4200; n++) {
+      const x = R() * w, y = R() * h, p = (y | 0) * w + (x | 0); if (E[p] < 0.5 || !inside(x, y) || (faceK(x, y) > 0.2 && R() < 0.6)) continue;
+      const [gx, gy] = grad(x, y); if (!gx && !gy) continue;
+      let a = Math.atan2(gy, gx) + Math.PI / 2 + (R() - 0.5) * 0.35, len = (10 + R() * 26) * u, P = R() < 0.65 ? Lp : Dp;
+      const x1 = x - Math.cos(a) * len, y1 = y - Math.sin(a) * len, x2 = x + Math.cos(a) * len * 1.2, y2 = y + Math.sin(a) * len * 1.2, b = (R() - 0.5) * 6 * u;
+      P.moveTo(x1, y1); P.quadraticCurveTo(x + Math.cos(a + 1.57) * b, y + Math.sin(a + 1.57) * b, x2, y2);
+    }
+    for (let n = 0; n < 9; n++) {                                                               // long sweeping guide lines
+      const x = w * (0.2 + R() * 0.6), y = h * (0.15 + R() * 0.75), a = R() * Math.PI, len = (120 + R() * 220) * u;
+      Lp.moveTo(x - Math.cos(a) * len, y - Math.sin(a) * len); Lp.quadraticCurveTo(x + (R() - 0.5) * 40 * u, y + (R() - 0.5) * 40 * u, x + Math.cos(a) * len, y + Math.sin(a) * len);
+    }
+    g.lineCap = "round"; g.strokeStyle = "rgba(40,34,70,.2)"; g.lineWidth = 0.7 * u; g.stroke(Lp);
+    g.strokeStyle = "rgba(25,20,50,.32)"; g.lineWidth = 0.9 * u; g.stroke(Dp);
+
+    // 3) loose dry-brush strokes across the shoulders
+    g.save(); g.globalCompositeOperation = "multiply"; g.lineCap = "round";
+    for (let k = 0; k < 6; k++) {
+      const col = [PINK, MAG, PINK, VIO, BLUE, PINK][k], y0 = h * (0.76 + R() * 0.16), x0 = w * (0.1 + R() * 0.3), len = w * (0.3 + R() * 0.35), a = -0.3 + R() * 0.25;
+      for (let b = 0; b < 4; b++) {                                         // broad wet stroke with bristle edges
+        const off = (b - 2) * 7 * u; g.strokeStyle = `rgba(${col},${0.08 + R() * 0.1})`; g.lineWidth = (14 + R() * 22) * u;
+        g.beginPath(); g.moveTo(x0 - Math.sin(a) * off, y0 + Math.cos(a) * off);
+        g.quadraticCurveTo(x0 + Math.cos(a) * len * 0.5, y0 + Math.sin(a) * len * 0.5 + (R() - 0.5) * 20 * u, x0 + Math.cos(a) * len * (0.8 + R() * 0.3), y0 + Math.sin(a) * len + off);
+        g.stroke();
+      }
+    }
+    // 4) drips running down from the washes
+    for (let k = 0; k < 9; k++) {
+      const x = R() < 0.5 ? w * (0.03 + R() * 0.22) : w * (0.75 + R() * 0.22), y = h * (0.35 + R() * 0.4), col = R() < 0.55 ? PINK : BLUE, L2 = (60 + R() * 220) * u;
+      g.strokeStyle = `rgba(${col},.28)`; g.lineWidth = (2 + R() * 3.5) * u;
+      g.beginPath(); g.moveTo(x, y); g.lineTo(x + (R() - 0.5) * 3 * u, y + L2); g.stroke();
+      g.fillStyle = `rgba(${col},.5)`; g.beginPath(); g.arc(x, y + L2, (3 + R() * 2.5) * u, 0, Math.PI * 2); g.fill();
+    }
+    // 5) splatter (kept off the face)
+    for (let k = 0; k < 4; k++) {
+      const cx0 = R() < 0.5 ? w * (0.1 + R() * 0.2) : w * (0.72 + R() * 0.2), cy0 = h * (0.08 + R() * 0.55), col = [MAG, PINK, BLUE, MAG][k];
+      g.fillStyle = `rgba(${col},.5)`;
+      for (let n = 0; n < 40; n++) { const a = R() * 6.28, d = R() ** 1.6 * 110 * u, x = cx0 + Math.cos(a) * d, y = cy0 + Math.sin(a) * d; if (!clear(x, y, 10 * u)) continue; g.beginPath(); g.arc(x, y, (R() < 0.12 ? 4 + R() * 6 : 0.8 + R() * 2.6) * u, 0, Math.PI * 2); g.fill(); }
+    }
+    g.restore();
     return out;
   }
 
@@ -911,10 +1117,10 @@ const EMBEDDED_PHOTO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/6xaJS
   async function assets() {
     if (smAssets) return smAssets;
     const [frame, logo] = await Promise.all([loadImg(PC.frameSrc), loadImg(PC.logoSrc).catch(() => null)]);
-    try { await Promise.all(['400 112px "Kaushan Script"', '700 28px Inter', '500 26px Inter'].map((f) => document.fonts.load(f))); } catch (e) {}
+    try { await Promise.all(['400 112px "Kaushan Script"', '500 46px Caveat', '700 28px Inter', '500 26px Inter', '600 26px Inter'].map((f) => document.fonts.load(f))); } catch (e) {}
     return (smAssets = { frame, logo });
   }
-  const captionText = () => (ST.caption === "__own" ? (ST.own.trim() || "Your caption here") : ST.caption);
+  const captionText = () => (ST.caption === "__own" ? ST.own.trim() : ST.caption);
   function compose() {
     const g = pg, K = PC.K, { frame, logo } = smAssets, W = PC.win;
     g.setTransform(K, 0, 0, K, 0, 0);
@@ -936,12 +1142,18 @@ const EMBEDDED_PHOTO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/6xaJS
     // fixed footer lines in clean indigo type
     g.fillStyle = PC.indigo; g.font = '700 28px Inter, system-ui, sans-serif';
     if ("letterSpacing" in g) g.letterSpacing = "1.5px";
-    g.fillText(PC.line1, PC.W / 2, 1222);
+    g.fillText(PC.line1, PC.W / 2, 1176);
     if ("letterSpacing" in g) g.letterSpacing = "0.5px";
-    g.font = '500 26px Inter, system-ui, sans-serif'; g.fillText(PC.line2, PC.W / 2, 1262);
+    g.font = '500 26px Inter, system-ui, sans-serif'; g.fillText(PC.line2, PC.W / 2, 1210);
     if ("letterSpacing" in g) g.letterSpacing = "0px";
+    // fixed creator credit (slightly left of centre, above the halftone rooftops)
+    const CR = PC.credit, halo = (t, x, y) => { g.lineJoin = "round"; g.strokeStyle = "rgba(255,255,255,.95)"; g.lineWidth = 7; g.strokeText(t, x, y); };
+    g.font = '500 22px Inter, system-ui, sans-serif'; halo(CR.a, CR.cx, 1250); g.fillStyle = PC.indigo; g.fillText(CR.a, CR.cx, 1250);
+    g.font = '500 46px Caveat, "Segoe Script", "Bradley Hand", cursive'; halo(CR.name, CR.cx, 1291); g.fillStyle = "#3B3A8F"; g.fillText(CR.name, CR.cx, 1291);
+    g.font = '600 26px Inter, system-ui, sans-serif'; halo(CR.email, CR.cx, 1325); g.fillStyle = PC.indigo; g.fillText(CR.email, CR.cx, 1325);
     g.setTransform(1, 0, 0, 1, 0, 0);
-    pc.setAttribute("aria-label", `Your postcard: ${ST.mode} sketch portrait with the caption “${drawn}”, the ADADA logo, and the lines ${PC.line1}, ${PC.line2}.`);
+    pc.setAttribute("aria-label", `Your postcard: ${({ pencil: "pencil sketch", watercolour: "vibrant watercolour", scribble: "scribble ink" })[ST.mode]} portrait with the caption “${drawn}”, the ADADA logo, the lines ${PC.line1}, ${PC.line2}, and the credit: A little souvenir from Yuni Ahmad, ${PC.credit.email}.`);
+    queueBlob();
   }
   const smStatus = (msg, err) => { const s = $("smStatus"); s.textContent = msg || ""; s.classList.toggle("err", !!err); };
 
@@ -955,8 +1167,13 @@ const EMBEDDED_PHOTO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/6xaJS
       await assets();
       const key = [ST.mode, ST.zoom, ST.fx, ST.fy, quality].join("|");
       if (key !== smSketchKey) {
-        const k = quality === "full" ? PC.K : 0.55, c = cropPhoto(PC.win.w * k, PC.win.h * k), A = analyse(c);
-        smSketch = ST.mode === "pen" ? sketchPen(A, 7) : sketchPencil(A, 7); smSketchKey = key;
+        const k = quality === "full" ? PC.K : 0.55, W0 = PC.win.w * k, H0 = PC.win.h * k;
+        if (ST.mode === "watercolour") {                       // pull back so head, shoulders and painted space all fit
+          const zf = 0.8, inner = cropPhoto(W0 * zf, H0 * zf), c = mk(W0, H0), cg = c.getContext("2d");
+          cg.fillStyle = "#fff"; cg.fillRect(0, 0, W0, H0); cg.drawImage(inner, (W0 - inner.width) / 2, (H0 - inner.height) * 0.5);
+          smSketch = paintWatercolour(analyse(c), 7, zf);
+        } else smSketch = sketchPencil(analyse(cropPhoto(W0, H0)), 7);
+        smSketchKey = key;
       }
       compose();
       $("pcExample").hidden = true; pc.hidden = false; $("pcBadge").textContent = "Your postcard";
@@ -1046,18 +1263,57 @@ const EMBEDDED_PHOTO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/6xaJS
   const endDrag = () => { if (drag) { drag = null; clearTimeout(smTimer); smRender("full"); } };
   pc.addEventListener("pointerup", endDrag); pc.addEventListener("pointercancel", endDrag);
 
-  $("smDownload").addEventListener("click", () => {
-    if (!smSrc || $("smDownload").disabled) return;
-    try {
-      pc.toBlob((b) => {
-        if (!b) { smStatus("Sorry, the postcard couldn’t be saved on this device.", true); return; }
-        const a = el("a", { href: URL.createObjectURL(b), download: "senyum-bandung-postcard.png" });
-        document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-        toast("Postcard downloaded");
-      }, "image/png");
-    } catch (err) {
-      smStatus("Downloading needs the page to be opened from its web address (for example GitHub Pages), not as a local file.", true);
+  /* ---- Save & share ---- */
+  const UA = navigator.userAgent || "";
+  const isIOS = /iPad|iPhone|iPod/.test(UA) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isAndroid = /Android/i.test(UA), isPhone = isIOS || isAndroid;
+  const FILE = "sketch-me-in-bandung-postcard.png";
+  const siteURL = location.protocol.startsWith("http") ? location.origin + location.pathname : "https://yuniahmad.github.io";
+  const shareText = "My postcard from Sketch Me in Bandung · ADADA + CUMULUS 2026 🎨 Make yours: " + siteURL;
+  const canShareFiles = (() => { try { const f = new File([new Blob(["x"], { type: "image/png" })], "p.png", { type: "image/png" }); return !!(navigator.canShare && navigator.canShare({ files: [f] })); } catch (e) { return false; } })();
+  $("saveLabel").textContent = isPhone ? "Save to Photos" : "Download postcard";
+  $("saveHint").textContent = isIOS && canShareFiles ? "Save to Photos opens the share menu: tap Save Image to add it to your Photos."
+    : isAndroid ? "Saves to your phone’s Downloads, and it appears in Gallery / Google Photos."
+    : isIOS ? "You’ll see your postcard: press and hold it, then tap Save to Photos."
+    : "Saves a PNG to your Downloads folder.";
+  const getBlob = () => smBlob ? Promise.resolve(smBlob) : new Promise((res) => { try { pc.toBlob((b) => res(b), "image/png"); } catch (e) { res(null); } });
+  const ready = () => smSrc && !$("smDownload").disabled;
+  let sheetURL = null;
+  function showSheet(b) {
+    if (sheetURL) URL.revokeObjectURL(sheetURL);
+    sheetURL = URL.createObjectURL(b); $("saveImg").src = sheetURL; $("saveSheet").hidden = false; $("saveClose").focus();
+  }
+  $("saveClose").addEventListener("click", () => { $("saveSheet").hidden = true; $("smDownload").focus(); });
+  $("saveSheet").addEventListener("click", (e) => { if (e.target.id === "saveSheet") $("saveSheet").hidden = true; });
+  function download(b) {
+    const a = el("a", { href: URL.createObjectURL(b), download: FILE });
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  }
+  $("smDownload").addEventListener("click", async () => {
+    if (!ready()) return;
+    const b = await getBlob();
+    if (!b) { smStatus("Downloading needs the page to be opened from its web address (for example GitHub Pages), not as a local file.", true); return; }
+    if (isIOS) {                                                        // iPhone: share sheet → “Save Image” goes straight to Photos
+      if (canShareFiles) {
+        try { await navigator.share({ files: [new File([b], FILE, { type: "image/png" })] }); return; }
+        catch (err) { if (err && err.name === "AbortError") return; }
+      }
+      showSheet(b); return;                                             // fallback: press-and-hold to save
     }
+    download(b);
+    toast(isAndroid ? "Saved – find it in Gallery or Downloads" : "Postcard downloaded");
+  });
+  $("smShare").addEventListener("click", async () => {
+    if (!ready()) return;
+    const b = await getBlob(); if (!b) return;
+    if (canShareFiles) {                                                // phones: share sheet with the image → pick WhatsApp
+      try { await navigator.share({ files: [new File([b], FILE, { type: "image/png" })], text: shareText }); return; }
+      catch (err) { if (err && err.name === "AbortError") return; }
+    }
+    // no file sharing (e.g. desktop): save the image, then open WhatsApp with the message so it can be attached
+    download(b);
+    window.open("https://wa.me/?text=" + encodeURIComponent(shareText), "_blank", "noopener");
+    toast("Postcard saved – attach it in WhatsApp");
   });
 
 })();
